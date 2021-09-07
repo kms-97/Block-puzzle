@@ -1,0 +1,23 @@
+.top-gameboard-container {
+    width: 540px;
+    height: 540px;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 1px solid black;
+}
+
+.horizon-gameboard {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.square {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}

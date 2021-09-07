@@ -1,25 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import Gamemode from './component/Gamemode'
+import Scoreboard from './component/Scoreboard';
+import Gameboard from './component/Gameboard';
+import ObjectList from './component/ObjectList';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="top-container">
+      <Gamemode/>
+      <Scoreboard/>
+      <Gameboard/>
+      <ObjectList/>
     </div>
-  );
+  )
 }
 
 export default App;

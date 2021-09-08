@@ -1,13 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, { useContext } from "react";
+import GameDataContext from "./context/GameData"
 import "./Gameboard.css"
 
 const Gameboard = () => {
-    const [gamemode, setGamemode] = useState([[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]])
+    const GameData = useContext(GameDataContext)
+
+    const makeBlankArray = (size) => {
+        const blankArray = []
+        for (let i = 0; i < size; i++) {
+            blankArray.push([])
+            for (let j = 0; j < size; j++) {
+                blankArray[i].push(j)
+            }
+        }
+        return blankArray
+    }
 
     return (
         <div className="top-gameboard-container">
             {
-                gamemode.map((horizon, index) => {
+                makeBlankArray(GameData.state.gamemode).map((horizon, index) => {
                     return(
                         <Horizonboard horizon={horizon} line={index} key={"h" + index}/>
                     )

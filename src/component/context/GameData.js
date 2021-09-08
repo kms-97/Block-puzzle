@@ -15,11 +15,9 @@ const GameDataProvider = ({ children }) => {
     const context = {
         state : {
             gamemode,
-            boardLocation
         },
         actions : {
             setGamemode,
-            setBoardLocation
         }
     }
 

@@ -3,20 +3,14 @@ import React, { useState, createContext } from "react";
 const GameDataContext = createContext({
     state: {
         gamemode : 7,
-        boardLocation: {
-            x : null,
-            y : null
-        }
     },
     actions : {
         setGamemode: () => {},
-        setBoardLocation: () => {}
     }
 })
 
 const GameDataProvider = ({ children }) => {
     const [gamemode, setGamemode] = useState(7)
-    const [boardLocation, setBoardLocation] = useState({x:null, y:null})
 
     const context = {
         state : {

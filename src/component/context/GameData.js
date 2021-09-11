@@ -5,7 +5,7 @@ const GameDataContext = createContext({
         gamemode : 7,
     },
     actions : {
-        setGamemode: () => {},
+        setGamemode: () => {}
     }
 })
 
@@ -14,12 +14,10 @@ const GameDataProvider = ({ children }) => {
 
     const context = {
         state : {
-            gamemode,
-            boardLocation
+            gamemode
         },
         actions : {
-            setGamemode,
-            setBoardLocation
+            setGamemode
         }
     }
 

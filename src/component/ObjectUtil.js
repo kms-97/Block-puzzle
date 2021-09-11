@@ -10,7 +10,6 @@ const blockShape = [
 ]
 
 const blockColor = [
-    'black',
     'gray',
     'blue',
     'red',
@@ -28,12 +27,12 @@ const rotate = [
 const randomNumber = () => {
     return ({
         shape: Math.floor(Math.random() * 8), 
-        color: Math.floor(Math.random() * 6),
+        color: Math.floor(Math.random() * 5),
         rotate: Math.floor(Math.random() * 4)
     })
 }
 
-const makeBlock = () => {
+export const makeBlock = () => {
     const num = randomNumber()
     const blockArray = blockShape[num.shape]
     const color = blockColor[num.color]
@@ -44,28 +43,4 @@ const makeBlock = () => {
         color,
         blockRotate
     }
-}
-
-export const displayBlock = () => {
-    const {blockArray, color, blockRotate} = makeBlock()
-
-    return (
-        <div className="object-container" style={{transform: `rotate(${blockRotate}deg)`}}>
-            {
-                blockArray.map((line) => {
-                    return(
-                        <div>
-                            {line.map((each) => {
-                                return(
-                                    each === 1?
-                                    <div className="object-child block" style={{backgroundColor: color}}></div>
-                                    :<div className="object-child"></div>
-                                )
-                            })}
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
 }

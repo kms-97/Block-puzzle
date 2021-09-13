@@ -4,7 +4,9 @@ const blockShape = [
     [[1,1],[1,1]],
     [[1,0,0],[1,1,1]],
     [[0,1,0],[1,1,1]],
+    [[0,1,0],[0,1,0]],
     [[0,0,1],[1,1,1]],
+    [[0,1,0],[0,1,0],[0,1,0]],
     [[0,0,1],[0,0,1],[1,1,1]],
     [[1,1,1],[1,1,1],[1,1,1]],
 ]
@@ -26,7 +28,7 @@ const rotate = [
 
 const randomNumber = () => {
     return ({
-        shape: Math.floor(Math.random() * 8), 
+        shape: Math.floor(Math.random() * 10), 
         color: Math.floor(Math.random() * 5),
         rotate: Math.floor(Math.random() * 4)
     })

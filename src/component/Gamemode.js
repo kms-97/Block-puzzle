@@ -9,6 +9,7 @@ const Gamemode = () => {
 
     const modeChange = (e) => {
         GameData.actions.setGamemode(Number(e.target.value))
+        GameData.actions.setScore(0)
     }
 
     const modeButton = modeList.map((mode) => {

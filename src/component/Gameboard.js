@@ -85,10 +85,47 @@ const Block = () => {
 }
 
 const DisplayBlock = () => {
+    const GameData = useContext(GameDataContext)
     const [blockState, setBlockState] = useState({
         blockArray: blockUtil.makeBlock()['blockArray'],
         color: blockUtil.makeBlock()['color'],
         blockRotate: blockUtil.makeBlock()['blockRotate']
+    })
+
+    useEffect(() => {
+        let filledLine = 0
+        let filled = []
+        const allSquare = document.querySelectorAll('.square')
+
+        for (let i = 0; i < GameData.state.gamemode; i++) {
+            const rowStart = i*GameData.state.gamemode
+            const rowfilled = []
+            const colfilled = []
+            for (let j = 0; j < GameData.state.gamemode; j ++) {
+                if (allSquare[rowStart+j].classList.length === 1) continue
+                rowfilled.push(allSquare[rowStart+j])
+            }
+            for (let j = 0; j < GameData.state.gamemode; j ++) {
+                if (allSquare[i+(j*GameData.state.gamemode)].classList.length === 1) continue
+                colfilled.push(allSquare[i+(j*GameData.state.gamemode)])
+            }
+
+            if (rowfilled.length === GameData.state.gamemode) {
+                filled = filled.concat(rowfilled)
+                filledLine++
+            }
+            if (colfilled.length === GameData.state.gamemode) {
+                filled = filled.concat(colfilled)
+                filledLine++
+            }
+        }
+
+        if (filledLine > 0) {
+            filled.forEach((node) => {
+                node.className = 'square'
+            })
+            GameData.actions.setScore(GameData.state.gamemode * filledLine + GameData.state.score)
+        }
     })
 
     const onmousedown = (event) => {
@@ -149,10 +186,10 @@ const DisplayBlock = () => {
                         block.hidden = true
                         const objectBelow = document.elementFromPoint(presentX + squareWidth/2, presentY + squareWidth/2)
                         block.hidden = false
-                        console.log(objectBelow)
+
                         // 요소 중 하나라도 유효하지 않은 위치에 있으면 원위치
                         if (!(objectBelow && (objectBelow.className === 'square'))) {
-                            throw('invalid position')
+                            return
                         }
                         targetSqaure.push(objectBelow)
                     }

@@ -3,21 +3,26 @@ import React, { useState, createContext } from "react";
 const GameDataContext = createContext({
     state: {
         gamemode : 7,
+        score : 0
     },
     actions : {
-        setGamemode: () => {}
+        setGamemode: () => {},
+        setScore: () => {},
     }
 })
 
 const GameDataProvider = ({ children }) => {
     const [gamemode, setGamemode] = useState(7)
+    const [score, setScore] = useState(0)
 
     const context = {
         state : {
-            gamemode
+            gamemode,
+            score
         },
         actions : {
-            setGamemode
+            setGamemode,
+            setScore
         }
     }
 

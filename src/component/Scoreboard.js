@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import GameDataContext from "./context/GameData"
 import "./Scoreboard.css"
 
 const Scoreboard = () => {
-    const [score, setScore] = useState(0)
+    const GameData = useContext(GameDataContext)
 
     return (
         <div id="score-board" className="alert alert-light rounded-3 border border-primary">
-            { score }
+            { GameData.state.score }
         </div>
     )
 }

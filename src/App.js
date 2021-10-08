@@ -2,16 +2,19 @@ import './App.css';
 import Gamemode from './component/Gamemode'
 import Scoreboard from './component/Scoreboard';
 import Gameboard from './component/Gameboard';
-import { GameDataProvider } from './component/context/GameData';
+import { GameModeProvider } from './component/context/GameMode';
+import { GameScoreProvider } from './component/context/GameScore';
 
 const App = () => {
   return (
     <div className="top-container">
-      <GameDataProvider>
+      <GameScoreProvider>
+      <GameModeProvider>
           <Gamemode/>
           <Scoreboard/>
           <Gameboard/>
-      </GameDataProvider>
+      </GameModeProvider>
+      </GameScoreProvider>
     </div>  
   )
 }

@@ -1,18 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import GameDataContext from "./context/GameData"
-import "./ObjectList.css"
-import * as blockUtil from "./ObjectUtil"
+import GameModeContext from "./context/GameMode"
+import GameScoreContext from "./context/GameScore";
+import "./BlockList.css"
+import * as blockUtil from "./BlockUtil"
 import "./Gameboard.css"
 
 const Gameboard = () => {
-    const GameData = useContext(GameDataContext)
+    const GameMode = useContext(GameModeContext)
     const blockListLength = 3
 
     useEffect(() => {
         document.querySelectorAll('.square').forEach((node) => {
             node.className = 'square'
         })
-    }, [GameData.state.gamemode])
+    }, [GameMode.state.gamemode])
     
     const makeBlockList = (length) => {
         const blockList = []
@@ -37,7 +38,7 @@ const Gameboard = () => {
         <div>
             <div className="top-gameboard-container">
                 {
-                    makeBlankArray(GameData.state.gamemode).map((horizon, index) => {
+                    makeBlankArray(GameMode.state.gamemode).map((horizon, index) => {
                         return(
                             <Horizonboard horizon={horizon} line={index} key={'h' + index}/>
                         )
@@ -85,7 +86,8 @@ const Block = () => {
 }
 
 const DisplayBlock = () => {
-    const GameData = useContext(GameDataContext)
+    const GameMode = useContext(GameModeContext)
+    const GameScore = useContext(GameScoreContext)
     const [blockState, setBlockState] = useState({
         blockArray: blockUtil.makeBlock()['blockArray'],
         color: blockUtil.makeBlock()['color'],
@@ -97,24 +99,24 @@ const DisplayBlock = () => {
         let filled = []
         const allSquare = document.querySelectorAll('.square')
 
-        for (let i = 0; i < GameData.state.gamemode; i++) {
-            const rowStart = i*GameData.state.gamemode
+        for (let i = 0; i < GameMode.state.gamemode; i++) {
+            const rowStart = i*GameMode.state.gamemode
             const rowfilled = []
             const colfilled = []
-            for (let j = 0; j < GameData.state.gamemode; j ++) {
+            for (let j = 0; j < GameMode.state.gamemode; j ++) {
                 if (allSquare[rowStart+j].classList.length === 1) continue
                 rowfilled.push(allSquare[rowStart+j])
             }
-            for (let j = 0; j < GameData.state.gamemode; j ++) {
-                if (allSquare[i+(j*GameData.state.gamemode)].classList.length === 1) continue
-                colfilled.push(allSquare[i+(j*GameData.state.gamemode)])
+            for (let j = 0; j < GameMode.state.gamemode; j ++) {
+                if (allSquare[i+(j*GameMode.state.gamemode)].classList.length === 1) continue
+                colfilled.push(allSquare[i+(j*GameMode.state.gamemode)])
             }
 
-            if (rowfilled.length === GameData.state.gamemode) {
+            if (rowfilled.length === GameMode.state.gamemode) {
                 filled = filled.concat(rowfilled)
                 filledLine++
             }
-            if (colfilled.length === GameData.state.gamemode) {
+            if (colfilled.length === GameMode.state.gamemode) {
                 filled = filled.concat(colfilled)
                 filledLine++
             }
@@ -124,7 +126,7 @@ const DisplayBlock = () => {
             filled.forEach((node) => {
                 node.className = 'square'
             })
-            GameData.actions.setScore(GameData.state.gamemode * filledLine + GameData.state.score)
+            GameScore.actions.setGameScore(GameMode.state.gamemode * filledLine + GameScore.state.gameScore)
         }
     })
 

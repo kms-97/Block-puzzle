@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import GameDataContext from "./context/GameData"
+import GameScoreContext from "./context/GameScore";
 import "./Scoreboard.css"
 
 const Scoreboard = () => {
-    const GameData = useContext(GameDataContext)
+    const gameScore = useContext(GameScoreContext)
 
     return (
         <div id="score-board" className="alert alert-light rounded-3 border border-primary">
-            { GameData.state.score }
+            {gameScore.state.gameScore}
         </div>
     )
 }

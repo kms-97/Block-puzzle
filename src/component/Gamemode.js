@@ -1,20 +1,22 @@
 import React, { useContext } from 'react';
-import GameDataContext from "./context/GameData"
+import GameModeContext from "./context/GameMode"
+import GameScoreContext from "./context/GameScore"
 import ModeButton from './ModeButton';
 import './Gamemode.css';
 
 const Gamemode = () => {
-    const GameData = useContext(GameDataContext)
+    const GameMode = useContext(GameModeContext)
+    const GameScore = useContext(GameScoreContext)
     const modeList = [5, 7, 9]
 
     const modeChange = (e) => {
-        GameData.actions.setGamemode(Number(e.target.value))
-        GameData.actions.setScore(0)
+        GameMode.actions.setGamemode(Number(e.target.value))
+        GameScore.actions.setGameScore(0)
     }
 
     const modeButton = modeList.map((mode) => {
         return(
-            (mode === GameData.state.gamemode) ?
+            (mode === GameMode.state.gamemode) ?
             <ModeButton key={mode.toString()} mode={mode} isActive={true} onClick={modeChange}/>
             :<ModeButton key={mode.toString()} mode={mode} isActive={false} onClick={modeChange}/>
         )

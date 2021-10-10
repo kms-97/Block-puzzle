@@ -89,7 +89,7 @@ const DisplayBlock = () => {
     const GameMode = useContext(GameModeContext)
     const GameScore = useContext(GameScoreContext)
     const [blockState, setBlockState] = useState({
-        blockArray: blockUtil.makeBlock()['blockArray'],
+        blockShape: blockUtil.makeBlock()['blockArray'],
         color: blockUtil.makeBlock()['color'],
         blockRotate: blockUtil.makeBlock()['blockRotate']
     })
@@ -129,6 +129,40 @@ const DisplayBlock = () => {
             GameScore.actions.setGameScore(GameMode.state.gamemode * filledLine + GameScore.state.gameScore)
         }
     })
+
+    
+    useEffect(() => {
+        const allBlockContainer = document.getElementsByClassName('block-container')
+        const board = getGameBoard()
+        isItOver : try {
+            for (let i = 0; i < allBlockContainer.length; i++) {
+                const blockContainer = allBlockContainer[i]
+                const block = blockContainer.getAttribute('data-shape').split('/').map((each) => (each.split(',').map((str) => (Number(str)))))
+                const row = block[0].length
+                const col = block.length
+
+                for (let i = 0; i <= board.length - col; i++) {
+                    for (let j = 0; j <= board.length - row; j ++) {
+                        if (isCanMerge(board, block, i, j, row, col) === 1) break isItOver
+                    }
+                }
+            }
+            throw 'game over'
+        } catch(error) {
+            console.log(error)
+        }
+    }, [blockState])
+
+    const isCanMerge = (board, block, x, y, row, col) => {
+        console.log(x, y)
+        console.log(block)
+        for (let i = 0; i < col; i++) {
+            for (let j = 0; j < row; j++) {
+                if (board[x + i][y + j] && block[i][j]) return 0
+            }
+        }
+        return 1
+    }
 
     const onmousedown = (event) => {
         const blockContainer = event.currentTarget  
@@ -201,11 +235,12 @@ const DisplayBlock = () => {
                     })
 
                     const newState = blockUtil.makeBlock()
-                    setBlockState({...blockState, blockArray: newState.blockArray, color: newState.color, blockRotate: newState.blockRotate})
+                    setBlockState({...blockState, blockShape: newState.blockArray, color: newState.color, blockRotate: newState.blockRotate})
                     
                 } finally {
                     parentNode.append(block)
-                    block.style.position = "relative"
+                    block.style.position = ""
+                    block.style.zIndex = ""
                     block.style.left = '';
                     block.style.top = '';
                     blockList.forEach((childBlock) => {
@@ -219,12 +254,26 @@ const DisplayBlock = () => {
         };
     }
 
+    const getGameBoard = () => {
+        const board = []
+        document.getElementsByClassName('top-gameboard-container')[0].childNodes.forEach((horizon) => {
+            let line = []
+            horizon.childNodes.forEach((each) => {
+                if (each.classList.length === 1) line.push(0)
+                else line.push(1)
+            })
+            board.push(line)
+        })
+
+        return board
+    }
+
     return (
-        <div className="block-container" style={{transform: `rotate(${blockState.blockRotate}deg)`}} onDragStart={() => (false)} onMouseDown={onmousedown}>
+        <div className="block-container" onDragStart={() => (false)} onMouseDown={onmousedown} data-shape={blockState.blockShape.join('/')}>
             {
-                blockState.blockArray.map((line) => {
+                blockState.blockShape.map((line) => {
                     return(
-                        <div>
+                        <div className="sub-block-container">
                             {line.map((each) => {
                                 return(
                                     each === 1?

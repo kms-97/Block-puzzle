@@ -95,7 +95,7 @@ const DisplayBlock = () => {
 
     useEffect(() => {
         const newState = blockUtil.makeBlock()
-        setBlockState({...blockState, blockShape: newState.blockArray, color: newState.color})
+        setBlockState(blockState => ({...blockState, blockShape: newState.blockArray, color: newState.color}))
     }, [GameMode.state.gamemode])
 
     useEffect(() => {
@@ -138,23 +138,24 @@ const DisplayBlock = () => {
     useEffect(() => {
         const allBlockContainer = document.getElementsByClassName('block-container')
         const board = getGameBoard()
-        isItOver : try {
-            for (let i = 0; i < allBlockContainer.length; i++) {
-                const blockContainer = allBlockContainer[i]
-                const block = blockContainer.getAttribute('data-shape').split('/').map((each) => (each.split(',').map((str) => (Number(str)))))
-                const row = block[0].length
-                const col = block.length
+        isItOver:
+            try {
+                for (let i = 0; i < allBlockContainer.length; i++) {
+                    const blockContainer = allBlockContainer[i]
+                    const block = blockContainer.getAttribute('data-shape').split('/').map((each) => (each.split(',').map((str) => (Number(str)))))
+                    const row = block[0].length
+                    const col = block.length
 
-                for (let i = 0; i <= board.length - col; i++) {
-                    for (let j = 0; j <= board.length - row; j ++) {
-                        if (isCanMerge(board, block, i, j, row, col) === 1) break isItOver
+                    for (let i = 0; i <= board.length - col; i++) {
+                        for (let j = 0; j <= board.length - row; j ++) {
+                            if (isCanMerge(board, block, i, j, row, col) === 1) break isItOver
+                        }
                     }
                 }
+                throw new Error('game over')
+            } catch(error) {
+                document.getElementById('game-over').style.display = 'block'
             }
-            throw 'game over'
-        } catch(error) {
-            console.log(error)
-        }
     }, [blockState])
 
     const isCanMerge = (board, block, x, y, row, col) => {

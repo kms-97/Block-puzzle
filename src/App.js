@@ -2,6 +2,7 @@ import './App.css';
 import Gamemode from './component/Gamemode'
 import Scoreboard from './component/Scoreboard';
 import Gameboard from './component/Gameboard';
+import GameoverModal from './component/GameoverModal';
 import { GameModeProvider } from './component/context/GameMode';
 import { GameScoreProvider } from './component/context/GameScore';
 
@@ -13,6 +14,7 @@ const App = () => {
           <Gamemode/>
           <Scoreboard/>
           <Gameboard/>
+          <GameoverModal/>
       </GameModeProvider>
       </GameScoreProvider>
     </div>  

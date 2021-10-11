@@ -90,9 +90,13 @@ const DisplayBlock = () => {
     const GameScore = useContext(GameScoreContext)
     const [blockState, setBlockState] = useState({
         blockShape: blockUtil.makeBlock()['blockArray'],
-        color: blockUtil.makeBlock()['color'],
-        blockRotate: blockUtil.makeBlock()['blockRotate']
+        color: blockUtil.makeBlock()['color']
     })
+
+    useEffect(() => {
+        const newState = blockUtil.makeBlock()
+        setBlockState({...blockState, blockShape: newState.blockArray, color: newState.color})
+    }, [GameMode.state.gamemode])
 
     useEffect(() => {
         let filledLine = 0
@@ -154,8 +158,6 @@ const DisplayBlock = () => {
     }, [blockState])
 
     const isCanMerge = (board, block, x, y, row, col) => {
-        console.log(x, y)
-        console.log(block)
         for (let i = 0; i < col; i++) {
             for (let j = 0; j < row; j++) {
                 if (board[x + i][y + j] && block[i][j]) return 0
@@ -235,7 +237,7 @@ const DisplayBlock = () => {
                     })
 
                     const newState = blockUtil.makeBlock()
-                    setBlockState({...blockState, blockShape: newState.blockArray, color: newState.color, blockRotate: newState.blockRotate})
+                    setBlockState({...blockState, blockShape: newState.blockArray, color: newState.color})
                     
                 } finally {
                     parentNode.append(block)

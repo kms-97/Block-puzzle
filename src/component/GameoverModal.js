@@ -10,12 +10,11 @@ const GameoverModal = () => {
     const link = document.getElementById('game-over')
 
     const reStart = () => {
-        gameMode.actions.setGamemode(gameMode.state.gamemode)
+        gameMode.actions.setGamemode(new Number(gameMode.state.gamemode))
         gameScore.actions.setGameScore(0)
         
         link.style.display = 'none'
     }
-    console.log('modal re-render')
 
     return ReactDOM.createPortal(
     <div className="modal">

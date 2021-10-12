@@ -16,7 +16,7 @@ const Gamemode = () => {
 
     const modeButton = modeList.map((mode) => {
         return(
-            (mode === GameMode.state.gamemode) ?
+            (mode == GameMode.state.gamemode) ?
             <ModeButton key={mode.toString()} mode={mode} isActive={true} onClick={modeChange}/>
             :<ModeButton key={mode.toString()} mode={mode} isActive={false} onClick={modeChange}/>
         )

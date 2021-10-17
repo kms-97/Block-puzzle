@@ -116,11 +116,11 @@ const DisplayBlock = () => {
                 colfilled.push(allSquare[i+(j*GameMode.state.gamemode)])
             }
 
-            if (rowfilled.length === GameMode.state.gamemode) {
+            if (rowfilled.length == GameMode.state.gamemode) {
                 filled = filled.concat(rowfilled)
                 filledLine++
             }
-            if (colfilled.length === GameMode.state.gamemode) {
+            if (colfilled.length == GameMode.state.gamemode) {
                 filled = filled.concat(colfilled)
                 filledLine++
             }
